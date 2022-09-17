@@ -105,5 +105,6 @@ const styles = StyleSheet.create({
   timersList: {
     margin: 15,
     marginVertical: 50,
+    paddingBottom: 50
   },
 });

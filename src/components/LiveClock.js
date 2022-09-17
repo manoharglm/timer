@@ -23,7 +23,7 @@ function LiveClock(props) {
   const updateTime = () => {
     const timeInMilliSeconds = timerRef.current.getTime();
     timerRef.current = new Date(timeInMilliSeconds + 1000);
-    setTime(timerRef.current);
+    setTime(timerRef.current.toLocaleTimeString());
   };
 
   const getTime = async (timeZone) => {
@@ -32,17 +32,12 @@ function LiveClock(props) {
     timerRef.current = new Date(
       timeObj.datetime.slice(0, timeObj.datetime.length - 6).concat("+05:30")
     );
-    console.log(timerRef.current);
-    setTime(timerRef.current);
+    setTime(timerRef.current.toLocaleTimeString());
   };
 
   return (
     <View style={styles.container}>
-      {time && (
-        <Text style={styles.time}>
-          {time?.toLocaleTimeString && time.toLocaleTimeString()}
-        </Text>
-      )}
+      {time && <Text style={styles.time}>{time}</Text>}
     </View>
   );
 }
