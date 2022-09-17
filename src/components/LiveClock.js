@@ -30,7 +30,7 @@ function LiveClock(props) {
     const timeZoneName = getTimeZoneName(timeZone);
     const timeObj = await getTimeForTimezone(timeZoneName);
     timerRef.current = new Date(
-      timeObj.datetime.slice(0, timeObj.datetime.length - 6)
+      timeObj.datetime.slice(0, timeObj.datetime.length - 6).concat("+05:30")
     );
     console.log(timerRef.current);
     setTime(timerRef.current);
