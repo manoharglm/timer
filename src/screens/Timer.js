@@ -8,6 +8,7 @@ import {
   FlatList,
   Dimensions,
   Keyboard,
+  SafeAreaView,
 } from "react-native";
 import CountDown from "./CountDown";
 import { getUniqueId } from "./utils";
@@ -29,7 +30,7 @@ function Timer(props) {
   };
 
   const addTimer = () => {
-    Keyboard.dismiss()
+    Keyboard.dismiss();
     const timeInSeconds = inputTime
       .split(":")
       .reduce((acc, time) => 60 * acc + +time);
@@ -49,40 +50,43 @@ function Timer(props) {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
+    <>
       <FlatList
         contentContainerStyle={{
           margin: 15,
-          marginTop: 50,
+          marginVertical: 50,
         }}
         data={timers}
         renderItem={renderTimer}
       />
-      <TextInput
+      <SafeAreaView
         style={{
-          borderColor: "black",
-          borderWidth: 1,
           width: Dimensions.get("window").width * 0.8,
-          alignSelf: "center",
+          marginBottom: 20
         }}
-        value={inputTime}
-        onChangeText={handleInput}
-        autoFocus
-        keyboardType="number-pad"
-        placeholder={"00:00.00"}
-      />
-      <Button
-        style={{
-          alignSelf: "center",
-        }}
-        title="ADD TIMER"
-        onPress={addTimer}
-      />
-    </View>
+      >
+        <TextInput
+          style={{
+            borderColor: "black",
+            borderWidth: 1,
+            alignSelf: "center",
+            width: Dimensions.get("window").width * 0.8,
+          }}
+          value={inputTime}
+          onChangeText={handleInput}
+          autoFocus
+          keyboardType="number-pad"
+          placeholder={"00:00.00"}
+        />
+        <Button
+          style={{
+            alignSelf: "center",
+          }}
+          title="ADD TIMER"
+          onPress={addTimer}
+        />
+      </SafeAreaView>
+    </>
   );
 }
 
