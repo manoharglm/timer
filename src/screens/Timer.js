@@ -3,15 +3,16 @@ import {
   View,
   Text,
   Alert,
-  Button,
   TextInput,
   FlatList,
   Dimensions,
   Keyboard,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
-import CountDown from "./CountDown";
-import { getUniqueId } from "./utils";
+import CountDown from "../components/CountDown";
+import { getUniqueId } from "../components/utils";
+import Button from "../components/Button";
 
 function Timer(props) {
   const [inputTime, setInputTime] = React.useState("");
@@ -30,12 +31,14 @@ function Timer(props) {
   };
 
   const addTimer = () => {
-    Keyboard.dismiss();
-    const timeInSeconds = inputTime
-      .split(":")
-      .reduce((acc, time) => 60 * acc + +time);
-    setTimers([...timers, { time: timeInSeconds, id: getUniqueId() }]);
-    setInputTime("");
+    if (inputTime) {
+      Keyboard.dismiss();
+      const timeInSeconds = inputTime
+        .split(":")
+        .reduce((acc, time) => 60 * acc + +time);
+      setTimers([...timers, { time: timeInSeconds, id: getUniqueId() }]);
+      setInputTime("");
+    }
   };
 
   const handleInput = (value) => {
@@ -49,8 +52,12 @@ function Timer(props) {
     }
   };
 
+  const goHome = () => {
+    props.setCurrentScreen("HOME");
+  };
+
   return (
-    <>
+    <SafeAreaView>
       <FlatList
         contentContainerStyle={{
           margin: 15,
@@ -59,10 +66,10 @@ function Timer(props) {
         data={timers}
         renderItem={renderTimer}
       />
-      <SafeAreaView
+      <View
         style={{
           width: Dimensions.get("window").width * 0.8,
-          marginBottom: 20
+          marginBottom: 20,
         }}
       >
         <TextInput
@@ -71,6 +78,10 @@ function Timer(props) {
             borderWidth: 1,
             alignSelf: "center",
             width: Dimensions.get("window").width * 0.8,
+            height: 50,
+            color: "#00000",
+            fontSize: 16,
+            paddingLeft: 10,
           }}
           value={inputTime}
           onChangeText={handleInput}
@@ -78,15 +89,16 @@ function Timer(props) {
           keyboardType="number-pad"
           placeholder={"00:00.00"}
         />
+        <Button title="ADD TIMER" onPress={addTimer} />
         <Button
-          style={{
-            alignSelf: "center",
+          title="GO BACK"
+          onPress={goHome}
+          buttonStyle={{
+            borderWidth: 0,
           }}
-          title="ADD TIMER"
-          onPress={addTimer}
         />
-      </SafeAreaView>
-    </>
+      </View>
+    </SafeAreaView>
   );
 }
 
