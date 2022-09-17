@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, Dimensions, SafeAreaView } from "react-native";
-import { getTimeForTimezone, getTimeZoneName } from "../components/utils";
+import { View, Dimensions, SafeAreaView, StyleSheet } from "react-native";
 import Button from "../components/Button";
 import LiveClock from "../components/LiveClock";
 
@@ -17,35 +16,17 @@ function Clock(props) {
 
   return (
     <SafeAreaView>
-      <View
-        style={{
-          width: Dimensions.get("window").width * 0.8,
-          marginBottom: 20,
-          flex: 1,
-          justifyContent: "space-around",
-        }}
-      >
+      <View style={styles.container}>
         <LiveClock timeZone={timeZone} />
         <View>
-          <View
-            style={{
-              flexDirection: "row",
-            }}
-          >
+          <View style={styles.timeZoneButtonContainer}>
             <Button
-              buttonStyle={{
-                width: Dimensions.get("window").width * 0.38,
-                borderWidth: timeZone === "IST" ? 2 : 1,
-                marginHorizontal: 3,
-              }}
+              buttonStyle={styles.timeZoneButton(timeZone, "IST")}
               title="IST"
               onPress={() => selectTimeZone("IST")}
             />
             <Button
-              buttonStyle={{
-                width: Dimensions.get("window").width * 0.38,
-                borderWidth: timeZone === "PST" ? 2 : 1,
-              }}
+              buttonStyle={styles.timeZoneButton(timeZone, "PST")}
               title="PST"
               onPress={() => selectTimeZone("PST")}
             />
@@ -54,9 +35,7 @@ function Clock(props) {
           <Button
             title="GO BACK"
             onPress={goHome}
-            buttonStyle={{
-              borderWidth: 0,
-            }}
+            buttonStyle={styles.goBackButton}
           />
         </View>
       </View>
@@ -65,3 +44,25 @@ function Clock(props) {
 }
 
 export default Clock;
+
+const styles = StyleSheet.create({
+  goBackButton: {
+    borderWidth: 0,
+  },
+  timeZoneButtonContainer: {
+    flexDirection: "row",
+  },
+  container: {
+    width: Dimensions.get("window").width * 0.8,
+    marginBottom: 20,
+    flex: 1,
+    justifyContent: "space-around",
+  },
+  timeZoneButton: (timeZone, selectedTimeZone) => {
+    return {
+      width: Dimensions.get("window").width * 0.38,
+      borderWidth: timeZone === selectedTimeZone ? 2 : 1,
+      marginHorizontal: 3,
+    };
+  },
+});

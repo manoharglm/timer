@@ -6,26 +6,24 @@ export default function BackButton(props) {
     props.setCurrentScreen("HOME");
   };
   return (
-    <TouchableOpacity
-      style={{
-        alignItems: "flex-end",
-        paddingTop: 30,
-        position: "absolute",
-        right: -20
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 30,
-          color: "#00000",
-          fontWeight: "bold",
-        }}
-        onPress={goHome}
-      >
+    <TouchableOpacity style={styles.container}>
+      <Text style={styles.closeIcon} onPress={goHome}>
         ⓧ
       </Text>
     </TouchableOpacity>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  closeIcon: {
+    fontSize: 30,
+    color: "#00000",
+    fontWeight: "bold",
+  },
+  container: {
+    alignItems: "flex-end",
+    paddingTop: 30,
+    position: "absolute",
+    right: -20,
+  },
+});

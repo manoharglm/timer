@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { getTimeForTimezone, getTimeZoneName } from "../components/utils";
 
 function LiveClock(props) {
@@ -37,25 +37,9 @@ function LiveClock(props) {
   };
 
   return (
-    <View
-      style={{
-        justifyContent: "center",
-        alignSelf: "center",
-        paddingHorizontal: 10,
-        flex: 1,
-      }}
-    >
+    <View style={styles.container}>
       {time && (
-        <Text
-          style={{
-            fontSize: 30,
-            color: "#00000",
-            fontWeight: "bold",
-            borderWidth: 1,
-            borderRadius: 5,
-            padding: 20,
-          }}
-        >
+        <Text style={styles.time}>
           {time?.toLocaleTimeString && time.toLocaleTimeString()}
         </Text>
       )}
@@ -64,3 +48,20 @@ function LiveClock(props) {
 }
 
 export default LiveClock;
+
+const styles = StyleSheet.create({
+  time: {
+    fontSize: 30,
+    color: "#00000",
+    fontWeight: "bold",
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 20,
+  },
+  container: {
+    justifyContent: "center",
+    alignSelf: "center",
+    paddingHorizontal: 10,
+    flex: 1,
+  },
+});

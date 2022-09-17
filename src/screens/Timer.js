@@ -1,14 +1,12 @@
 import React from "react";
 import {
   View,
-  Text,
-  Alert,
   TextInput,
   FlatList,
   Dimensions,
   Keyboard,
   SafeAreaView,
-  TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import CountDown from "../components/CountDown";
 import { getUniqueId } from "../components/utils";
@@ -59,30 +57,13 @@ function Timer(props) {
   return (
     <SafeAreaView>
       <FlatList
-        contentContainerStyle={{
-          margin: 15,
-          marginVertical: 50,
-        }}
+        contentContainerStyle={styles.timersList}
         data={timers}
         renderItem={renderTimer}
       />
-      <View
-        style={{
-          width: Dimensions.get("window").width * 0.8,
-          marginBottom: 20,
-        }}
-      >
+      <View style={styles.buttonContainer}>
         <TextInput
-          style={{
-            borderColor: "black",
-            borderWidth: 1,
-            alignSelf: "center",
-            width: Dimensions.get("window").width * 0.8,
-            height: 50,
-            color: "#00000",
-            fontSize: 16,
-            paddingLeft: 10,
-          }}
+          style={styles.durationInput}
           value={inputTime}
           onChangeText={handleInput}
           autoFocus
@@ -93,9 +74,7 @@ function Timer(props) {
         <Button
           title="GO BACK"
           onPress={goHome}
-          buttonStyle={{
-            borderWidth: 0,
-          }}
+          buttonStyle={styles.goBackButton}
         />
       </View>
     </SafeAreaView>
@@ -103,3 +82,28 @@ function Timer(props) {
 }
 
 export default Timer;
+
+const styles = StyleSheet.create({
+  goBackButton: {
+    borderWidth: 0,
+  },
+  durationInput: {
+    borderColor: "#000000",
+    borderWidth: 1,
+    alignSelf: "center",
+    width: Dimensions.get("window").width * 0.8,
+    height: 50,
+    color: "#00000",
+    fontSize: 16,
+    paddingLeft: 10,
+  },
+  buttonContainer: {
+    width: Dimensions.get("window").width * 0.8,
+    marginBottom: 20,
+    alignSelf: "center",
+  },
+  timersList: {
+    margin: 15,
+    marginVertical: 50,
+  },
+});

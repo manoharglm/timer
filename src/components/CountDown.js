@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Alert,
-  Button,
-  TextInput,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Alert, Dimensions, StyleSheet } from "react-native";
 import { convertSecondsToHMS } from "./utils";
 
 function CountDown(props) {
@@ -50,38 +42,10 @@ function CountDown(props) {
   };
 
   return (
-    <View
-      style={{
-        borderColor: "black",
-        borderWidth: 1,
-        borderRadius: 5,
-        margin: 10,
-        // alignItems: "center",
-        width: Dimensions.get("window").width * 0.8,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingHorizontal: 10,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 30,
-          color: "#00000",
-          fontWeight: "bold",
-        }}
-      >
-        {convertSecondsToHMS(time)}
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.countDown}>{convertSecondsToHMS(time)}</Text>
 
-      <Text
-        style={{
-          fontSize: 30,
-          color: "#00000",
-          fontWeight: "bold",
-          marginLeft: 5,
-        }}
-        onPress={handleDeleteTimer}
-      >
+      <Text style={styles.closeButton} onPress={handleDeleteTimer}>
         X
       </Text>
     </View>
@@ -89,3 +53,27 @@ function CountDown(props) {
 }
 
 export default CountDown;
+
+const styles = StyleSheet.create({
+  closeButton: {
+    fontSize: 30,
+    color: "#00000",
+    fontWeight: "bold",
+    marginLeft: 5,
+  },
+  countDown: {
+    fontSize: 30,
+    color: "#00000",
+    fontWeight: "bold",
+  },
+  container: {
+    borderColor: "#000000",
+    borderWidth: 1,
+    borderRadius: 5,
+    margin: 10,
+    width: Dimensions.get("window").width * 0.8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+  },
+});
