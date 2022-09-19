@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { getTimeForTimezone, getTimeZoneName } from "../components/utils";
 
 function LiveClock(props) {
@@ -21,18 +21,23 @@ function LiveClock(props) {
   }, []);
 
   const updateTime = () => {
-    const timeInMilliSeconds = timerRef.current.getTime();
-    timerRef.current = new Date(timeInMilliSeconds + 1000);
-    setTime(timerRef.current.toLocaleTimeString());
+    if (timerRef.current) {
+      const timeInMilliSeconds = timerRef.current.getTime();
+      timerRef.current = new Date(timeInMilliSeconds + 1000);
+      setTime(timerRef.current.toLocaleTimeString());
+    }
   };
 
   const getTime = async (timeZone) => {
-    const timeZoneName = getTimeZoneName(timeZone);
-    const timeObj = await getTimeForTimezone(timeZoneName);
-    timerRef.current = new Date(
-      timeObj.datetime.slice(0, timeObj.datetime.length - 6).concat("+05:30")
-    );
-    setTime(timerRef.current.toLocaleTimeString());
+    try {
+      const timeZoneName = getTimeZoneName(timeZone);
+      const timeObj = await getTimeForTimezone(timeZoneName);
+      const { year, month, day, hour, minute, seconds } = timeObj;
+      timerRef.current = new Date(year, month, day, hour, minute, seconds);
+      setTime(timerRef.current.toLocaleTimeString());
+    } catch (error) {
+      Alert.alert("Failed to get response");
+    }
   };
 
   return (

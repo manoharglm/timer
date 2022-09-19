@@ -16,7 +16,7 @@ export const convertSecondsToHMS = (seconds) => {
 
 export const getTimeForTimezone = async (timeZone = "Asia/kolkata") => {
   const response = await fetch(
-    `http://worldtimeapi.org/api/timezone/${timeZone}`,
+    `https://timeapi.io/api/Time/current/zone?timeZone=${timeZone}`,
     {
       method: "GET",
       headers: {
@@ -31,7 +31,7 @@ export const getTimeForTimezone = async (timeZone = "Asia/kolkata") => {
 export const getTimeZoneName = (zone) => {
   switch (zone) {
     case "PST":
-      return "PST8PDT";
+      return "America/Los_Angeles";
     case "IST":
       return "Asia/kolkata";
     default:
